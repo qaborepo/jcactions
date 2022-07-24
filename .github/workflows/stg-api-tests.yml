@@ -61,6 +61,7 @@ jobs:
           ls -al
           ls -al ./allure-history-api
           ls -al ./allure-report-api
+          rm ./allure-history-api/.git
 
       - name: Deploy report to Github Pages
         if: always()
