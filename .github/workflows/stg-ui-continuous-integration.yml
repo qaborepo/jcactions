@@ -1,0 +1,84 @@
+name: Continuous Integration
+
+on:
+#    schedule:
+#      - cron:  '0 08-18/2 * * 1-5'    # Run At 12:00 - Monday to Friday
+    push:
+      branches:
+        - 'test/WRLD-1114'
+    workflow_dispatch:
+env:
+  GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  ENV_TYB: STG
+  SLACK_WEBHOOK: ${{ secrets.SLACK_STAGE_WEBHOOK }}
+
+jobs:
+  UIAutomationTests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Chromium
+        run: sudo apt-get install chromium-browser
+
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.16.0
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ui-automation
+        
+      - name: Running E2E tests  
+        run: npm run test-github-actions
+        working-directory: ui-automation
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate allure report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: ui-automation/evidences/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+          keep_reports: 120
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
+      - name: Adding Report Link
+        if: always()
+        run: echo "###  Automation Result here :rocket:! https://scaling-umbrella-4dec8825.pages.github.io/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: timeline-report-automation-result
+          path: ui-automation/evidences/timeline-html-report
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        if: always()
+        env:
+          SLACK_CHANNEL: env-tests-stage
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
+          SLACK_USERNAME: 'Automation Tests bot'
+          SLACK_ICON: 'https://avatars.slack-edge.com/2018-11-13/477920088673_68d1f4e5a83b3172cc9e_512.png'
+          SLACK_TITLE: 'E2E Automation tests executed in STG'
+          SLACK_MESSAGE: 'Automation Result here :rocket:! https://scaling-umbrella-4dec8825.pages.github.io/${{ env.GITHUB_RUN_NUMBER }}'

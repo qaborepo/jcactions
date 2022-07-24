@@ -1,0 +1,8 @@
+node_modules
+ui-automation/allure-report
+ui-automation/allure-results
+ui-automation/timeline-html-report
+ui-automation/.DS_Store
+.DS_Store
+ui-automation/evidences
+allure-results/

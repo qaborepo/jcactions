@@ -1,0 +1,79 @@
+name: tyb-tests-api
+
+on:
+  schedule:
+    - cron:  '0 1 * * *'    # Run every day at 01:00 UTC
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'main'
+env:
+  BASE_URL: https://tyb-stage.world
+
+jobs:
+  apiTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: install dependencies
+        run: yarn install
+        working-directory: api-automation
+
+      - name: run api tests
+        run: yarn test
+        working-directory: api-automation
+
+      # - name: Get Allure history
+      #   uses: actions/checkout@v2
+      #   if: always()
+      #   continue-on-error: true
+      #   with:
+      #     ref: gh-pages
+      #     path: gh-pages
+
+      # - name: Generate allure report
+      #   uses: simple-elf/allure-report-action@master
+      #   if: always()
+      #   id: allure-report-api
+      #   with:
+      #     allure_results: api-automation/allure-results
+      #     gh_pages: gh-pages
+      #     allure_report: allure-report-api
+      #     allure_history: allure-history
+      #     keep_reports: 120
+
+      - name: Move allure report to subfolder
+        run: |
+          mkdir ./public
+          echo "this is jc test" > jc.md
+          cp jc.md ./public/
+          chmod -R 777 ./public
+          ls -al ./public
+          ls -al
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        # env:
+        #   PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #   PUBLISH_BRANCH: gh-pages
+        #   PUBLISH_DIR: allure-history
+          # DESTINATION_DIR: api
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          # destination_dir: jcapi
+          # keep_files: false
+
+      - name: Adding Report Link
+        if: always()
+        run: echo "###  Automation Result here :rocket:! https://scaling-umbrella-4dec8825.pages.github.io/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
