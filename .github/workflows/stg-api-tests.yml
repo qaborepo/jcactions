@@ -54,7 +54,7 @@ jobs:
       - name: Move allure report to subfolder
         run: |
           mkdir ./public
-          cp -R ./allure-history-api ./public
+          cp -R ./allure-history-api/. ./public
           chmod -R 777 ./public
           ls -al ./public
           ls -al
