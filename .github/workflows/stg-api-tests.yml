@@ -40,25 +40,25 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      # - name: Generate allure report
-      #   uses: simple-elf/allure-report-action@master
-      #   if: always()
-      #   id: allure-report-api
-      #   with:
-      #     allure_results: api-automation/allure-results
-      #     gh_pages: gh-pages
-      #     allure_report: allure-report-api
-      #     allure_history: allure-history
-      #     keep_reports: 120
+      - name: Generate allure report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report-api
+        with:
+          allure_results: api-automation/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report-api
+          allure_history: allure-history-api
+          keep_reports: 120
 
-      - name: Move allure report to subfolder
-        run: |
-          mkdir ./public
-          echo "this is jc test2" > jc.md
-          cp jc.md ./public/
-          chmod -R 777 ./public
-          ls -al ./public
-          ls -al
+      # - name: Move allure report to subfolder
+      #   run: |
+      #     mkdir ./public
+      #     echo "this is jc test2" > jc.md
+      #     cp jc.md ./public/
+      #     chmod -R 777 ./public
+      #     ls -al ./public
+      #     ls -al
 
       - name: Deploy report to Github Pages
         if: always()
@@ -70,7 +70,7 @@ jobs:
           # DESTINATION_DIR: api
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./allure-history-api
           destination_dir: jcapi
           # keep_files: false
 
