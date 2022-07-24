@@ -54,8 +54,7 @@ jobs:
       - name: Move allure report to subfolder
         run: |
           mkdir ./public
-          echo "this is jc test2" > jc.md
-          cp jc.md ./public/
+          cp -r !(.git) ./allure-history-api ./public
           chmod -R 777 ./public
           ls -al ./public
           ls -al
@@ -74,7 +73,7 @@ jobs:
           # DESTINATION_DIR: api
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-history-api
+          publish_dir: ./public
           destination_dir: jcapi
           # publish_branch: gh-pages
           # keep_files: false
