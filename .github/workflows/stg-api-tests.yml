@@ -59,9 +59,9 @@ jobs:
           chmod -R 777 ./public
           ls -al ./public
           ls -al
+          rm -R ./allure-history-api/.git
           ls -al ./allure-history-api
           ls -al ./allure-report-api
-          rm ./allure-history-api/.git
 
       - name: Deploy report to Github Pages
         if: always()
