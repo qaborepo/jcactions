@@ -32,13 +32,13 @@ jobs:
         run: yarn test
         working-directory: api-automation
 
-      # - name: Get Allure history
-      #   uses: actions/checkout@v2
-      #   if: always()
-      #   continue-on-error: true
-      #   with:
-      #     ref: gh-pages
-      #     path: gh-pages
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       # - name: Generate allure report
       #   uses: simple-elf/allure-report-action@master
@@ -54,7 +54,7 @@ jobs:
       - name: Move allure report to subfolder
         run: |
           mkdir ./public
-          echo "this is jc test" > jc.md
+          echo "this is jc test2" > jc.md
           cp jc.md ./public/
           chmod -R 777 ./public
           ls -al ./public
