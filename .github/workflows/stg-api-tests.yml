@@ -38,7 +38,7 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
+          path: gh-pages/jcapi
 
       - name: Generate allure report
         uses: simple-elf/allure-report-action@master
@@ -78,4 +78,4 @@ jobs:
 
       - name: Adding Report Link
         if: always()
-        run: echo "###  Automation Result here :rocket:! https://scaling-umbrella-4dec8825.pages.github.io/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
+        run: echo "###  Automation Result here :rocket:! https://qaborepo.github.io/jcactions/jcapi/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
