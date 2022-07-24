@@ -56,7 +56,6 @@ jobs:
           mkdir ./public
           cp -R ./allure-history-api ./public
           chmod -R 777 ./public
-          rm -R ./public/.git
           ls -al ./public
           ls -al
           ls -al ./allure-history-api
