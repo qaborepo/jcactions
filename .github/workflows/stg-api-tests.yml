@@ -59,6 +59,7 @@ jobs:
           chmod -R 777 ./public
           ls -al ./public
           ls -al
+          chmod -R 777 ./allure-history-api/.git
           rm -R ./allure-history-api/.git
           ls -al ./allure-history-api
           ls -al ./allure-report-api
