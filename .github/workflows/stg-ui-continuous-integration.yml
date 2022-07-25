@@ -64,7 +64,7 @@ jobs:
 
       - name: Adding Report Link
         if: always()
-        run: echo "###  Automation Result here :rocket:! https://scaling-umbrella-4dec8825.pages.github.io/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
+        run: echo "###  Automation Result here :rocket:! https://qaborepo.github.io/jcactions/web/$GITHUB_RUN_NUMBER/" >> $GITHUB_STEP_SUMMARY
 
       # - uses: actions/upload-artifact@v3
       #   if: always()
