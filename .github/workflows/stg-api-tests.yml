@@ -51,29 +51,19 @@ jobs:
           allure_history: allure-history-api
           keep_reports: 120
 
-      - name: Move allure report to subfolder
+      - name: Move allure report to publish folder
         run: |
-          mkdir ./public
-          cp -R ./allure-history-api/. ./public
-          chmod -R 777 ./public
-          ls -al ./public
-          ls -al
-          ls -al ./allure-history-api
-          ls -al ./allure-report-api
-
+          mkdir ./publish_allure_results
+          cp -R ./allure-history-api/. ./publish_allure_results
+          chmod -R 777 ./publish_allure_results
+          
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
-        # env:
-        #   PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   PUBLISH_BRANCH: gh-pages
-        #   PUBLISH_DIR: allure-history
-          # DESTINATION_DIR: api
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          destination_dir: jcapi
-          # publish_branch: gh-pages
+          publish_dir: ./publish_allure_results
+          destination_dir: api
           # keep_files: false
 
       - name: Adding Report Link
