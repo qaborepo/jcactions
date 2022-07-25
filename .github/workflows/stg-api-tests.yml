@@ -38,7 +38,7 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages/jcapi
+          path: gh-pages
 
       - name: Generate allure report
         uses: simple-elf/allure-report-action@master
@@ -46,7 +46,7 @@ jobs:
         id: allure-report-api
         with:
           allure_results: api-automation/allure-results
-          gh_pages: gh-pages
+          gh_pages: gh-pages/jcapi
           allure_report: allure-report-api
           allure_history: allure-history-api
           keep_reports: 120
