@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed May 03 01:59:14 GMT 2023","Wed May 03 01:59:15 GMT 2023","383","","Graphql schema","","Graphql schema","graphql schema","graphql schema",""
