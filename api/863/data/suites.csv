@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Mon Oct 28 02:18:44 GMT 2024","Mon Oct 28 02:18:44 GMT 2024","280","","Graphql schema","","Graphql schema","graphql schema","graphql schema",""
