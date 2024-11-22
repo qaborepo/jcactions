@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","147","graphql schema","","Fri Nov 22 02:19:43 GMT 2024","failed","Fri Nov 22 02:19:43 GMT 2024","","Graphql schema","Graphql schema","graphql schema"
